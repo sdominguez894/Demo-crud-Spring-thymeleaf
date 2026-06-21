@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+    <title id="title">Form</title>
+    <desc id="desc">A simple form editing icon.</desc>
+    <rect x="20" y="12" width="48" height="72" rx="8" fill="#ffffff" stroke="#d9e1e5" stroke-width="3"/>
+    <path d="M32 30h24M32 44h24M32 58h14" stroke="#68737d" stroke-width="4" stroke-linecap="round"/>
+    <path d="M58 72 76 54l8 8-18 18-10 2 2-10Z" fill="#dff1e4" stroke="#176b87" stroke-width="3" stroke-linejoin="round"/>
+    <path d="m72 58 8 8" stroke="#176b87" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="32" cy="72" r="4" fill="#176b87"/>
+</svg>

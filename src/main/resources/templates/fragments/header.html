@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="navbar app-header has-shadow" role="navigation" aria-label="Main navigation" th:fragment="siteHeader(activeItem)">
+    <div class="container is-fluid px-4">
+        <div class="navbar-brand">
+            <a class="navbar-item app-brand px-0" th:href="@{/records}">
+                <img src="/img/base-icon.svg" th:src="@{/img/base-icon.svg}" alt="" aria-hidden="true">
+                <span class="ml-2 has-text-weight-semibold">Demo Base Project</span>
+            </a>
+        </div>
+        <div th:replace="~{fragments/menu :: mainMenu(${activeItem})}"></div>
+    </div>
+</header>
+
+<section class="level is-mobile app-page-header mb-4" th:fragment="pageHeader(eyebrow, title, actionHref, actionText, actionVariant)">
+    <div class="level-left">
+        <div>
+            <p class="heading mb-1 has-text-grey" th:text="${eyebrow}">Demo Base project</p>
+            <h1 class="title is-4 mb-0" th:text="${title}">Registers</h1>
+        </div>
+    </div>
+    <div class="level-right">
+        <a class="button is-small"
+           th:classappend="${actionVariant}"
+           th:href="${actionHref}"
+           th:text="${actionText}">Action</a>
+    </div>
+</section>
+</body>
+</html>

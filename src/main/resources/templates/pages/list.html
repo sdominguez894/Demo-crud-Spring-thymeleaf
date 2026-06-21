@@ -1,0 +1,33 @@
+<main id="page-content"
+      class="section app-page"
+      th:fragment="pageContent"
+      xmlns:th="http://www.thymeleaf.org">
+    <section th:replace="~{fragments/header :: pageHeader('Demo base project', 'Registers', @{/records/new}, 'Add register', 'is-link')}"></section>
+
+    <div class="notification is-success is-light py-3 px-4 mb-4" th:if="${message}" th:text="${message}"></div>
+
+    <form class="box app-panel p-3 mb-4" method="get" th:action="@{/records}">
+        <input type="hidden" name="pageSize" th:value="${grid.pageSize}">
+        <input type="hidden" name="page" value="1">
+        <div class="field is-horizontal mb-0">
+            <div class="field-label is-normal app-search-label">
+                <label class="label is-size-7" for="search">Search by name</label>
+            </div>
+            <div class="field-body">
+                <div class="field has-addons mb-0 app-search-controls">
+                    <div class="control is-expanded">
+                        <input class="input is-small" id="search" name="search" type="search" placeholder="Type a name" th:value="${search}">
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-small" type="submit">Search</button>
+                    </div>
+                    <div class="control">
+                        <a class="button is-light is-small" th:href="@{/records}">Clear</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <section th:replace="~{fragments/grid :: grid(${grid})}"></section>
+</main>

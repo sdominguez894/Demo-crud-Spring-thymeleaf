@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="navbar-menu is-active app-menu" th:fragment="mainMenu(activeItem)" aria-label="Main navigation">
+    <div class="navbar-end">
+        <a class="navbar-item"
+           th:href="@{/records}"
+           th:classappend="${activeItem == 'records'} ? ' is-active' : ''">Registers</a>
+    </div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<section th:fragment="grid(grid)"
+         th:id="${grid.domId}"
+         class="m-grid box app-panel p-0"
+         th:attr="data-grid-id=${grid.id}, data-grid-instance=${grid.instanceId}"
+         xmlns:th="http://www.thymeleaf.org">
+    <header class="m-grid__toolbar px-3 py-2">
+        <div class="m-grid__toolbar-left">
+            <span class="tag is-light m-grid__status" th:text="${grid.loadedText}">Records 1 to 10 of 95</span>
+        </div>
+
+        <div class="m-grid__toolbar-center" th:if="${grid.title}">
+            <h2 class="title is-6 mb-0 m-grid__title" th:text="${grid.title}">Grid title</h2>
+        </div>
+
+        <div class="m-grid__toolbar-right">
+            <form class="m-grid__page-size-form is-inline-flex is-align-items-center mb-0" method="get" th:action="${grid.baseUrl}">
+                <input type="hidden" name="search" th:value="${search}">
+                <input type="hidden" name="page" value="1">
+                <label class="button is-small is-light m-grid__page-size-label" for="records-page-size">Per page</label>
+                <div class="control m-grid__page-size-control">
+                    <div class="select is-small">
+                        <select id="records-page-size"
+                                name="pageSize"
+                                aria-label="Registers per page"
+                                onchange="this.form.requestSubmit()">
+                            <option th:each="size : ${grid.pageSizeOptions}"
+                                    th:value="${size}"
+                                    th:selected="${size == grid.pageSize}"
+                                    th:text="${size}">
+                                10
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <div class="buttons are-small m-grid__export-actions">
+                <button class="button is-light" type="button" disabled title="PDF export is not available yet">Export PDF</button>
+                <button class="button is-light" type="button" disabled title="Excel export is not available yet">Export Excel</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="m-grid__table-container">
+        <table class="m-grid__table table is-fullwidth is-hoverable is-striped is-narrow" th:id="${grid.domId + '__table'}">
+            <thead>
+            <tr>
+                <th th:if="${grid.hasDetailFields}" class="m-grid__details-column" scope="col">
+                    <button class="button is-small is-light m-grid__details-button"
+                            type="button"
+                            data-m-grid-details-toggle-all
+                            aria-label="Expand all row details"
+                            title="Expand all row details">
+                        +
+                    </button>
+                </th>
+
+                <th th:each="col : ${grid.visibleColumns}"
+                    th:classappend="${col.alignCss}"
+                    th:style="${col.widthStyle}"
+                    scope="col">
+                    <button th:if="${col.sortable}"
+                            class="button is-small is-ghost m-grid__sort-button"
+                            type="button"
+                            th:text="${col.label}">
+                        Column
+                    </button>
+                    <span th:unless="${col.sortable}" th:text="${col.label}">Column</span>
+                </th>
+
+                <th th:if="${grid.hasRowActions}" class="m-grid__actions-column" scope="col">
+                    <span th:text="${grid.actionsLabel}">Actions</span>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:if="${grid.empty}">
+                <td th:attr="colspan=${grid.visibleColumns.size() + (grid.hasDetailFields ? 1 : 0) + (grid.hasRowActions ? 1 : 0)}"
+                    class="m-grid__empty"
+                    th:text="${grid.emptyText}">
+                    No records found
+                </td>
+            </tr>
+
+            <th:block th:each="row : ${grid.rows}">
+                <tr class="m-grid__data-row"
+                    th:id="${grid.domId + '__row-' + row.safeKey}"
+                    th:classappend="${row.cssClass}"
+                    data-m-grid-data-row>
+                    <td th:if="${grid.hasDetailFields}" class="m-grid__details-cell">
+                        <button class="button is-small is-light m-grid__details-button"
+                                type="button"
+                                data-m-grid-detail-toggle
+                                aria-expanded="false"
+                                aria-label="Show row details"
+                                th:attr="aria-controls=${grid.domId + '__details-' + row.safeKey}">
+                            +
+                        </button>
+                    </td>
+
+                    <td th:each="cell : ${row.visibleCells}">
+                        <span class="m-grid__cell-value"
+                              th:classappend="${cell.cssClass}"
+                              th:text="${cell.value}">Cell value</span>
+                    </td>
+
+                    <td th:if="${grid.hasRowActions}" class="m-grid__row-actions-cell">
+                        <div class="m-grid__row-actions buttons are-small">
+                            <th:block th:each="action : ${row.actions}">
+                                <a th:unless="${action.post}"
+                                   class="button is-small"
+                                   th:classappend="${action.cssClass}"
+                                   th:href="${action.url}"
+                                   th:text="${action.label}">
+                                    Select
+                                </a>
+                                <form th:if="${action.post}" method="post" th:action="${action.url}">
+                                    <button class="button is-small"
+                                            th:classappend="${action.cssClass}"
+                                            type="submit"
+                                            th:text="${action.label}">
+                                        Submit
+                                    </button>
+                                </form>
+                            </th:block>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${grid.hasDetailFields}"
+                    class="m-grid__details-row"
+                    th:id="${grid.domId + '__details-' + row.safeKey}"
+                    th:attr="aria-labelledby=${grid.domId + '__row-' + row.safeKey}"
+                    hidden>
+                    <td th:attr="colspan=${grid.visibleColumns.size() + (grid.hasDetailFields ? 1 : 0) + (grid.hasRowActions ? 1 : 0)}">
+                        <dl class="m-grid__details-panel">
+                            <div th:each="detail : ${row.detailCells}" class="m-grid__detail-row">
+                                <dt class="m-grid__detail-label" th:text="${detail.label}">Label</dt>
+                                <dd class="m-grid__detail-value" th:text="${detail.value}">Value</dd>
+                            </div>
+                        </dl>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="m-grid__pagination px-3 py-2" th:if="${grid.hasPagination}">
+        <nav class="pagination is-small is-centered mb-0" role="navigation" aria-label="Pagination">
+            <a th:if="${grid.hasPrevious}"
+               class="pagination-previous"
+               th:href="@{${grid.baseUrl}(search=${search},page=${grid.previousPage},pageSize=${grid.pageSize})}">
+                Previous
+            </a>
+            <a th:unless="${grid.hasPrevious}"
+               class="pagination-previous is-disabled"
+               aria-disabled="true">
+                Previous
+            </a>
+
+            <a th:if="${grid.hasNext}"
+               class="pagination-next"
+               th:href="@{${grid.baseUrl}(search=${search},page=${grid.nextPage},pageSize=${grid.pageSize})}">
+                Next
+            </a>
+            <a th:unless="${grid.hasNext}"
+               class="pagination-next is-disabled"
+               aria-disabled="true">
+                Next
+            </a>
+
+            <ul class="pagination-list">
+                <li th:each="pageNumber : ${grid.pageNumbers}">
+                    <a th:class="${pageNumber == grid.page} ? 'pagination-link is-current' : 'pagination-link'"
+                       th:href="@{${grid.baseUrl}(search=${search},page=${pageNumber},pageSize=${grid.pageSize})}"
+                       th:attr="aria-label=${'Go to page ' + pageNumber}, aria-current=${pageNumber == grid.page ? 'page' : null}"
+                       th:text="${pageNumber}">
+                        1
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+</section>

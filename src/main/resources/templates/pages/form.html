@@ -1,0 +1,42 @@
+<main id="page-content"
+      class="section app-page app-page-narrow"
+      th:fragment="pageContent"
+      xmlns:th="http://www.thymeleaf.org">
+    <section th:replace="~{fragments/header :: pageHeader('Register details', ${pageTitle}, @{/records}, 'Back', 'is-light')}"></section>
+
+    <form class="box app-panel p-4" method="post" th:action="@{/records}" th:object="${record}">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="field">
+            <label class="label" for="name">Name</label>
+            <div class="control">
+                <input class="input" id="name" type="text" th:field="*{name}" autofocus>
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+
+        <div class="columns is-variable is-3">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="creationDate">Creation date</label>
+                    <div class="control">
+                        <input class="input" id="creationDate" type="date" th:field="*{creationDate}">
+                    </div>
+                </div>
+            </div>
+            <div class="column is-narrow is-flex is-align-items-flex-end">
+                <div class="field mb-3">
+                    <label class="checkbox app-checkbox">
+                        <input type="checkbox" th:field="*{active}">
+                        <span>Active</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons mb-0">
+            <button class="button is-link" type="submit">Save</button>
+            <a class="button is-light" th:href="@{/records}">Cancel</a>
+        </div>
+    </form>
+</main>

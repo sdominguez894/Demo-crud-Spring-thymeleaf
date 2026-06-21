@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+    <title id="title">Records</title>
+    <desc id="desc">A simple records table icon.</desc>
+    <rect x="14" y="18" width="68" height="60" rx="8" fill="#ffffff" stroke="#d9e1e5" stroke-width="3"/>
+    <path d="M14 36h68" stroke="#d9e1e5" stroke-width="3"/>
+    <path d="M34 18v60" stroke="#d9e1e5" stroke-width="3"/>
+    <path d="M52 18v60" stroke="#d9e1e5" stroke-width="3"/>
+    <circle cx="24" cy="27" r="4" fill="#176b87"/>
+    <path d="M42 27h28" stroke="#176b87" stroke-width="4" stroke-linecap="round"/>
+    <path d="M22 48h6M42 48h4M60 48h12M22 62h6M42 62h4M60 62h12" stroke="#68737d" stroke-width="4" stroke-linecap="round"/>
+</svg>

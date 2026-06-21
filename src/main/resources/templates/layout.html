@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" xmlns:th="http://www.thymeleaf.org">
+    
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--  -->
+        <title th:text="${pageTitle}">Demo Base Project</title>
+        
+        <!--  -->
+        <link rel="stylesheet" href="/css/bulma.min.css" th:href="@{/css/bulma.min.css}">
+        <link rel="stylesheet" href="/css/styles.css?v=grid-pagination" th:href="@{/css/styles.css(v='grid-pagination')}">
+        
+        <!--  -->
+        <script src="/js/htmx.min.js" th:src="@{/js/htmx.min.js}" defer></script>
+        <script src="/js/grid.js" th:src="@{/js/grid.js}" defer></script>
+    </head>
+    
+    <!--  -->
+    <body class="app-body"
+        hx-boost:inherited="true"
+        hx-target:inherited="#page-content"
+        hx-select:inherited="#page-content"
+        hx-swap:inherited="outerHTML"
+        hx-push-url:inherited="true">
+
+        <!--  -->
+        <header th:replace="~{fragments/header :: siteHeader(${activeItem})}"></header>
+
+        <!--  -->
+        <main id="page-content" th:replace="~{${pageTemplate} :: pageContent}"></main>
+
+        <!--  -->
+        <footer th:replace="~{fragments/footer :: siteFooter}"></footer>
+    </body>
+</html>

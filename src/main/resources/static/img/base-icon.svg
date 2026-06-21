@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="title desc">
+    <title id="title">Mussap mark</title>
+    <desc id="desc">Simple geometric mark for the Mussap base project.</desc>
+    <rect width="48" height="48" rx="8" fill="#176b87"/>
+    <path d="M12 32V16h5l7 10 7-10h5v16h-5V24l-5 8h-4l-5-8v8h-5Z" fill="#ffffff"/>
+    <path d="M12 36h24" stroke="#dff1e4" stroke-width="3" stroke-linecap="round"/>
+</svg>
